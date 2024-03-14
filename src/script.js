@@ -1,4 +1,7 @@
-const NOTIFICATIONS_PER_PAGE = 10;
+const NOTIFICATIONS_PER_PAGE = 5;
+let currentNotifications = [];
+let currentPage = 0;
+let currentTab = "all";
 document.addEventListener("DOMContentLoaded", function () {
   const openSidebarButton = document.getElementById("openSidebar");
   const closeSidebarButton = document.querySelector(".sidebar-close");
@@ -11,13 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   closeSidebarButton.addEventListener("click", function () {
     sidebar.classList.add("hidden");
   });
-  const allTab = document.getElementById("all-tab");
-  const event = new MouseEvent("click", {
-    view: window,
-    bubbles: true,
-    cancelable: true,
-  });
-  allTab.dispatchEvent(event);
+
+  loadMoreNotifications();
 });
 
 document
@@ -28,8 +26,6 @@ document
   .addEventListener("click", filterNotifications);
 
 function filterNotifications(event) {
-  console.log("Filtering notifications for tab:", event.target.id);
-
   const notifications = document.querySelectorAll(".notification-card");
   const tabId = event.target.id;
 
@@ -45,11 +41,11 @@ function filterNotifications(event) {
   });
 }
 
-function renderNotifications(notifications) {
+function renderNotifications() {
   const notificationContainer = document.getElementById("notification-list");
   notificationContainer.innerHTML = "";
 
-  notifications.forEach((notification) => {
+  currentNotifications.forEach((notification) => {
     const notificationCard = document.createElement("div");
     notificationCard.classList.add("notification-card");
     notificationCard.dataset.read = notification.read;
@@ -71,23 +67,37 @@ function renderNotifications(notifications) {
   });
 }
 
-let currentPage = 0;
-let currentTab = "all";
-
-function loadMoreNotifications(tab) {
+function loadMoreNotifications() {
   fetch(
-    `/notifications?page=${currentPage}&size=${NOTIFICATIONS_PER_PAGE}&tab=${tab}`
+    `/api/notifications?page=${currentPage}&size=${NOTIFICATIONS_PER_PAGE}&tab=${currentTab}`
   )
     .then((response) => response.json())
     .then((notifications) => {
-      renderNotifications(notifications);
-      currentPage++;
+      currentNotifications = currentNotifications.concat(notifications);
+      renderNotifications();
+      // currentPage++;
     });
 }
+function updateNotificationsTab(newTab) {
+  currentPage = 0;
+  currentNotifications = [];
+  currentTab = newTab;
+}
 
+// Add event listener for the "Show More" button
+document.getElementById("show-more").addEventListener("click", () => {
+  currentPage++;
+  loadMoreNotifications();
+});
+
+// Update the currentTab variable when a tab is clicked
 document.getElementById("unread-tab").addEventListener("click", () => {
-  currentTab = "unread";
+  updateNotificationsTab("unread");
+  loadMoreNotifications();
 });
 document.getElementById("all-tab").addEventListener("click", () => {
-  currentTab = "all";
+  updateNotificationsTab("all");
+  loadMoreNotifications();
 });
+
+// Load initial notifications

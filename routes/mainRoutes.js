@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { formatDate } = require("../src/utils");
 const router = express.Router();
-const NOTIFICATIONS_PER_PAGE = 10;
+const NOTIFICATIONS_PER_PAGE = 5;
 router.get("/", (req, res) => {
   const dataPath = path.join(__dirname, "..", "src", "data.json");
   const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
@@ -16,12 +16,10 @@ router.get("/", (req, res) => {
     notification.date = formatDate(notification.date);
   });
 
-  res.render("index", {
-    notifications: notifications,
-  });
+  res.render("index");
 });
 // Add this to your mainRoutes.js
-router.get("/notifications", (req, res) => {
+router.get("/api/notifications", (req, res) => {
   const dataPath = path.join(__dirname, "..", "src", "data.json");
   const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
   const page = parseInt(req.query.page) || 0;
