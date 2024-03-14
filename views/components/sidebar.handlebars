@@ -1,0 +1,30 @@
+<aside class="sidebar hidden">
+  <section class="sidebar-header">
+    <div class="sidebar-header-content">
+      <img class="sidebar-icon" />
+      <h1 class="sidebar-title">התראות</h1>
+    </div>
+    <button class="sidebar-close">&times; </button>
+  </section>
+  <section class="sidebar-tabs">
+    <button class="sidebar-tab" id="unread-tab">שלא נקראו</button>
+    <button class="sidebar-tab" id="all-tab">כל ההתראות</button>
+  </section>
+  <section class="sidebar-notification-container" id="notification-list">
+    {{#each notifications}}
+      <div class="notification-card" data-read="{{read}}">
+        <div class="notification-title-container">
+          <p>{{#if read}}Read{{else}}Unread{{/if}}</p>
+          <h3 class="notification-title">{{title}}</h3>
+        </div>
+        <p class="notification-content">{{content}}</p>
+        <p class="notification-date">{{date}}</p>
+      </div>
+    {{/each}}
+  </section>
+  <button class="sidebar-show-more" id="show-more">Show More</button>
+
+  <section class="sidebar-footer">
+    <button id="mark-all-read">Mark All as Read</button>
+  </section>
+</aside>
