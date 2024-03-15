@@ -1,33 +1,40 @@
 import { formatDate } from "./utils";
-
+// Constants
 const NOTIFICATIONS_PER_PAGE = 5;
 const MAX_TYPED_CHARACTERS = 100;
+// Global variables
 let currentNotifications = [];
 let currentPage = 0;
 let currentTab = "all";
-
+// UI visibility toggling functions
 function toggleElementVisibility(element, show) {
   element.classList.toggle("hidden", !show);
   element.classList.toggle("visible", show);
 }
-
 function toggleModalVisibility(show) {
   const addNotificationModal = document.querySelector(
     ".add-notification-modal"
   );
   toggleElementVisibility(addNotificationModal, show);
 }
-
 function toggleOverlayVisibility(show) {
   const modalOverlay = document.querySelector(".modal-overlay");
   toggleElementVisibility(modalOverlay, show);
 }
+// Event listeners
+document.addEventListener("DOMContentLoaded", setupEventListeners);
 document.getElementById("show-more").addEventListener("click", () => {
   currentPage++;
   loadMoreNotifications();
 });
-
-document.addEventListener("DOMContentLoaded", function () {
+document
+  .getElementById("unread-tab")
+  .addEventListener("click", () => updateAndLoadNotifications("unread"));
+document
+  .getElementById("all-tab")
+  .addEventListener("click", () => updateAndLoadNotifications("all"));
+// Functions
+function setupEventListeners() {
   const notificationInput = document.getElementById("notification-input");
   const formCounter = document.getElementById("form-counter");
   const form = document.getElementById("add-notification-form");
@@ -93,20 +100,11 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error:", error);
       });
   });
-  function fetchFirstFiveNotifications() {
-    fetch("/api/notifications?page=0&size=5&tab=all")
-      .then((response) => response.json())
-      .then((notifications) => {
-        currentNotifications = notifications; // Update the current notifications array
-        renderNotifications(); // Re-render the notifications list with the fetched notifications
-      })
-      .catch((error) => console.error("Error fetching notifications:", error));
-  }
 
   openSidebarButton.addEventListener("click", () => {
     sidebar.classList.remove("hidden");
     toggleOverlayVisibility(true);
-    fetchFirstFiveNotifications(); // Call the fetch function when opening the sidebar
+    fetchFirstFiveNotifications();
   });
 
   closeSidebarButton.addEventListener("click", () => {
@@ -125,14 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   loadMoreNotifications();
-});
-
-document
-  .getElementById("unread-tab")
-  .addEventListener("click", () => updateAndLoadNotifications("unread"));
-document
-  .getElementById("all-tab")
-  .addEventListener("click", () => updateAndLoadNotifications("all"));
+}
 
 function updateAndLoadNotifications(newTab) {
   currentPage = 0;
@@ -162,11 +153,6 @@ function renderNotifications() {
     notificationContainer.appendChild(notificationCard);
   });
 }
-
-let notificationsByTab = {
-  all: [],
-  unread: [],
-};
 function loadMoreNotifications() {
   fetch(
     `/api/notifications?page=${currentPage}&size=${NOTIFICATIONS_PER_PAGE}&tab=${currentTab}`
@@ -184,3 +170,20 @@ function loadMoreNotifications() {
       renderNotifications();
     });
 }
+// Data fetching functions
+function fetchFirstFiveNotifications() {
+  fetch("/api/notifications?page=0&size=5&tab=all")
+    .then((response) => response.json())
+    .then((notifications) => {
+      currentNotifications = notifications;
+      renderNotifications();
+    })
+    .catch((error) => console.error("Error fetching notifications:", error));
+}
+// Initialization
+function initialize() {
+  fetchFirstFiveNotifications();
+}
+
+// Call the initialization function
+initialize();
