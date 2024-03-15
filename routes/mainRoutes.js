@@ -4,6 +4,13 @@ const path = require("path");
 const { formatDate } = require("../src/utils");
 const router = express.Router();
 const NOTIFICATIONS_PER_PAGE = 5;
+
+function sortNotificationsByDateDescending(a, b) {
+  const dateA = new Date(a.date);
+  const dateB = new Date(b.date);
+  return dateB - dateA; // Sort in descending order
+}
+
 router.get("/", (req, res) => {
   const dataPath = path.join(__dirname, "..", "src", "data.json");
   const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
@@ -11,44 +18,75 @@ router.get("/", (req, res) => {
   const size = parseInt(req.query.size) || NOTIFICATIONS_PER_PAGE;
   const start = page * size;
   const end = start + size;
-  const notifications = data.notifications.slice(start, end);
+
+  // Correctly define and sort the notifications array before slicing
+  const sortedNotifications = data.notifications.sort(
+    sortNotificationsByDateDescending
+  );
+  const notifications = sortedNotifications.slice(start, end);
+
+  // Format the dates of the notifications
   notifications.forEach((notification) => {
     notification.date = formatDate(notification.date);
   });
 
-  res.render("index");
+  res.render("index", { notifications });
 });
-// Add this to your mainRoutes.js
+
 router.get("/api/notifications", (req, res) => {
   const dataPath = path.join(__dirname, "..", "src", "data.json");
   const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
   const page = parseInt(req.query.page) || 0;
   const size = parseInt(req.query.size) || NOTIFICATIONS_PER_PAGE;
-  const tab = req.query.tab || "all"; // Default to 'all' tab
+  const tab = req.query.tab || "all";
   const start = page * size;
   const end = start + size;
 
-  // Filter notifications based on the current tab
   let notifications = data.notifications;
   if (tab === "unread") {
     notifications = notifications.filter((notification) => !notification.read);
   }
+  const sortedNotifications = notifications.sort(
+    sortNotificationsByDateDescending
+  );
 
-  // Slice the notifications array based on the page and size
-  const slicedNotifications = notifications.slice(start, end);
-  res.json(slicedNotifications); // Send the sliced array as a JSON response
+  const slicedNotifications = sortedNotifications.slice(start, end);
+  res.json(slicedNotifications);
 });
-// Route to add a new notification
+
 router.post("/notifications", (req, res) => {
-  const dataPath = path.join(__dirname, "..", "src", "data.json");
-  const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
-  const newNotification = {
-    id: data.notifications.length + 1, // Assuming IDs are sequential
-    ...req.body,
-  };
-  data.notifications.push(newNotification);
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-  res.json(newNotification);
+  console.log("Received POST request:", req.body);
+  try {
+    const dataPath = path.join(__dirname, "..", "src", "data.json");
+    const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, "0");
+    const month = (now.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-based in JavaScript
+    const year = now.getFullYear();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const dateString = `${day}/${month}/${year} ${hours}:${minutes}`;
+
+    const newNotification = {
+      id: data.notifications.length + 1,
+      title: req.body.title,
+      content: req.body.content,
+      date: dateString,
+      read: false,
+    };
+    data.notifications.push(newNotification);
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+    res.json(newNotification);
+  } catch (error) {
+    console.error("Error processing POST request:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while processing your request." });
+  }
+});
+
+router.get("/test", (req, res) => {
+  res.json({ message: "Test route" });
 });
 
 module.exports = router;

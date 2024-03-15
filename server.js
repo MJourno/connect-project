@@ -28,6 +28,7 @@ const hbs = expbs.create({
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
+app.use(express.json());
 
 // Serve static files from the 'dist' directory
 app.use(express.static("dist"));

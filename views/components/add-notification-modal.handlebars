@@ -11,10 +11,11 @@
         ></i>
       </button>
     </section>
-    <form class="add-notification-form">
+    <form class="add-notification-form" id="add-notification-form">
       <section class="form-input-container">
         <label class="form-title">כותרת התראה</label>
         <input type="text" class="form-input" name="title" required />
+        <div class="error-message" id="title-error">זהו שדה חובה</div>
       </section>
       <section class="form-input-container">
         <div class="form-title-container">
@@ -23,15 +24,18 @@
             0/100
           </span>
         </div>
-        <input
-          type="text"
+        <textarea
           class="form-input second-input"
-          name="title"
+          name="content"
           id="notification-input"
           required
-        />
+        ></textarea>
+        <div class="error-message" id="content-error">זהו שדה חובה</div>
       </section>
     </form>
   </section>
-  <button class="add-notification-submit">שמירה</button>
+  <button
+    class="add-notification-submit"
+    id="add-notification-submit"
+  >שמירה</button>
 </dialog>
