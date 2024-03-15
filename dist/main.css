@@ -378,6 +378,7 @@
   border-radius: 12px;
   opacity: 1;
   margin-top: 6px;
+  direction: rtl;
 }
 
 .form-input.second-input {
