@@ -1,50 +1,74 @@
+import { formatDate } from "./utils";
+
 const NOTIFICATIONS_PER_PAGE = 5;
 let currentNotifications = [];
 let currentPage = 0;
 let currentTab = "all";
+
+function toggleElementVisibility(element, show) {
+  element.classList.toggle("hidden", !show);
+  element.classList.toggle("visible", show);
+}
+
+function toggleModalVisibility(show) {
+  const addNotificationModal = document.querySelector(
+    ".add-notification-modal"
+  );
+  toggleElementVisibility(addNotificationModal, show);
+}
+
+function toggleOverlayVisibility(show) {
+  const modalOverlay = document.querySelector(".modal-overlay");
+  toggleElementVisibility(modalOverlay, show);
+}
+document.getElementById("show-more").addEventListener("click", () => {
+  currentPage++;
+  loadMoreNotifications();
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   const openSidebarButton = document.getElementById("openSidebar");
   const closeSidebarButton = document.querySelector(".sidebar-close");
   const closeModalButton = document.querySelector(".add-notification-close");
   const openAddNotificationModal = document.getElementById("openAddModal");
-  const modalOverlay = document.querySelector(".modal-overlay");
   const sidebar = document.querySelector(".sidebar");
-  const addNotificationModal = document.querySelector(
-    ".add-notification-modal"
-  );
 
-  openSidebarButton.addEventListener("click", function () {
+  openSidebarButton.addEventListener("click", () => {
     sidebar.classList.remove("hidden");
-    modalOverlay.classList.remove("hidden"); // Show the overlay
-    modalOverlay.classList.add("visible");
+    toggleOverlayVisibility(true);
   });
 
-  closeSidebarButton.addEventListener("click", function () {
+  closeSidebarButton.addEventListener("click", () => {
     sidebar.classList.add("hidden");
-    modalOverlay.classList.add("hidden"); // Hide the overlay
-    modalOverlay.classList.remove("visible");
+    toggleOverlayVisibility(false);
   });
 
-  closeModalButton.addEventListener("click", function () {
-    addNotificationModal.classList.add("hidden");
-    modalOverlay.classList.add("hidden"); // Hide the overlay
-    modalOverlay.classList.remove("visible"); // Ensure the overlay is not marked as visible
+  closeModalButton.addEventListener("click", () => {
+    toggleModalVisibility(false);
+    toggleOverlayVisibility(false);
   });
 
-  openAddNotificationModal.addEventListener("click", function () {
-    addNotificationModal.classList.remove("hidden"); // Ensure this line is correctly removing the 'hidden' class
-    modalOverlay.classList.remove("hidden"); // Show the overlay
-    modalOverlay.classList.add("visible"); // Ensure the overlay is marked as visible
+  openAddNotificationModal.addEventListener("click", () => {
+    toggleModalVisibility(true);
+    toggleOverlayVisibility(true);
   });
+
   loadMoreNotifications();
 });
 
 document
   .getElementById("unread-tab")
-  .addEventListener("click", filterNotifications);
+  .addEventListener("click", () => updateAndLoadNotifications("unread"));
 document
   .getElementById("all-tab")
-  .addEventListener("click", filterNotifications);
+  .addEventListener("click", () => updateAndLoadNotifications("all"));
+
+function updateAndLoadNotifications(newTab) {
+  currentPage = 0;
+  currentNotifications = [];
+  currentTab = newTab;
+  loadMoreNotifications();
+}
 
 function filterNotifications(event) {
   const notifications = document.querySelectorAll(".notification-card");
@@ -52,13 +76,8 @@ function filterNotifications(event) {
 
   notifications.forEach((notification) => {
     const isRead = notification.dataset.read === "true";
-    if (tabId === "unread-tab" && isRead) {
-      notification.style.display = "none";
-    } else if (tabId === "all-tab") {
-      notification.style.display = "block";
-    } else {
-      notification.style.display = "block";
-    }
+    notification.style.display =
+      tabId === "unread-tab" && isRead ? "none" : "block";
   });
 }
 
@@ -70,11 +89,12 @@ function renderNotifications() {
     const notificationCard = document.createElement("div");
     notificationCard.classList.add("notification-card");
     notificationCard.dataset.read = notification.read;
+    const formattedDate = formatDate(notification.date);
 
-    const dateParts = notification.date.split(" ");
-    const time = dateParts[1];
-    const date = dateParts[0].split("/").slice(0, 2).join(".");
-    const formattedDate = `${time} | ${date}`;
+    // const dateParts = notification.date.split(" ");
+    // const time = dateParts[1];
+    // const date = dateParts[0].split("/").slice(0, 2).join(".");
+    // const formattedDate = `${time} | ${date}`;
 
     notificationCard.innerHTML = `
       <div class="notification-title-container">
@@ -96,29 +116,5 @@ function loadMoreNotifications() {
     .then((notifications) => {
       currentNotifications = currentNotifications.concat(notifications);
       renderNotifications();
-      // currentPage++;
     });
 }
-function updateNotificationsTab(newTab) {
-  currentPage = 0;
-  currentNotifications = [];
-  currentTab = newTab;
-}
-
-// Add event listener for the "Show More" button
-document.getElementById("show-more").addEventListener("click", () => {
-  currentPage++;
-  loadMoreNotifications();
-});
-
-// Update the currentTab variable when a tab is clicked
-document.getElementById("unread-tab").addEventListener("click", () => {
-  updateNotificationsTab("unread");
-  loadMoreNotifications();
-});
-document.getElementById("all-tab").addEventListener("click", () => {
-  updateNotificationsTab("all");
-  loadMoreNotifications();
-});
-
-// Load initial notifications
