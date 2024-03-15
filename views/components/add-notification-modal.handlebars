@@ -1,37 +1,40 @@
-<dialog class="add-notification-modal">
-  <section class="modal-header">
-    <h2 class="modal-title">הוספת התראה חדשה</h2>
-    <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </section>
-  <form class="modal-form">
-    <section class="form-input-container">
-      <label class="form-title">כותרת התראה</label>
-      <input
-        type="text"
-        class="form-input"
-        name="title"
-        placeholder="כותרת התראה"
-        required
-      />
-    </section>
-    <section class="form-input-container">
-      <div class="form-title-container">
-        <label class="form-title">מלל התראה</label>
-        <span class="form-counter">
-          0/100
-        </span>
+<div class="modal-overlay hidden">
+  {{! <div class="modal-content"> }}
+  <dialog class="add-notification-modal hidden">
+    <section class="add-notification-container">
+      <section class="add-notification-header">
+        <h2 class="add-notification-title">הוספת התראה חדשה</h2>
+        <button type="button" class="add-notification-close" aria-label="Close">
+          <i
+            class="fa-solid fa-xmark add-notification-close-btn"
+            style="color: #32324c;"
+          ></i>
+        </button>
+      </section>
+      <form class="add-notification-form">
+        <section class="form-input-container">
+          <label class="form-title">כותרת התראה</label>
+          <input type="text" class="form-input" name="title" required />
+        </section>
+        <section class="form-input-container">
+          <div class="form-title-container">
+            <label class="form-title">מלל התראה</label>
+            <span class="form-counter">
+              0/100
+            </span>
 
-      </div>
-      <input
-        type="text"
-        class="form-input"
-        name="title"
-        placeholder="מלל התראה"
-        required
-      />
+          </div>
+          <input
+            type="text"
+            class="form-input second-input"
+            name="title"
+            required
+          />
+        </section>
+      </form>
     </section>
-  </form>
-  <button class="modal-submit">שמירה</button>
-</dialog>
+
+    <button class="add-notification-submit">שמירה</button>
+  </dialog>
+  {{! </div> }}
+</div>

@@ -5,16 +5,33 @@ let currentTab = "all";
 document.addEventListener("DOMContentLoaded", function () {
   const openSidebarButton = document.getElementById("openSidebar");
   const closeSidebarButton = document.querySelector(".sidebar-close");
+  const closeModalButton = document.querySelector(".add-notification-close");
+  const openAddNotificationModal = document.getElementById("openAddModal");
+  const modalOverlay = document.querySelector(".modal-overlay");
   const sidebar = document.querySelector(".sidebar");
+  const addNotificationModal = document.querySelector(
+    ".add-notification-modal"
+  );
 
   openSidebarButton.addEventListener("click", function () {
     sidebar.classList.remove("hidden");
+    modalOverlay.classList.add("visible");
   });
 
   closeSidebarButton.addEventListener("click", function () {
     sidebar.classList.add("hidden");
+    modalOverlay.classList.remove("visible");
   });
 
+  closeModalButton.addEventListener("click", function () {
+    addNotificationModal.classList.add("hidden");
+    modalOverlay.classList.remove("visible");
+  });
+
+  openAddNotificationModal.addEventListener("click", function () {
+    addNotificationModal.classList.remove("hidden");
+    modalOverlay.classList.add("visible");
+  });
   loadMoreNotifications();
 });
 
