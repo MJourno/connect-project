@@ -15,22 +15,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   openSidebarButton.addEventListener("click", function () {
     sidebar.classList.remove("hidden");
-    modalOverlay.classList.add("visible");
   });
 
   closeSidebarButton.addEventListener("click", function () {
     sidebar.classList.add("hidden");
-    modalOverlay.classList.remove("visible");
   });
 
   closeModalButton.addEventListener("click", function () {
     addNotificationModal.classList.add("hidden");
-    modalOverlay.classList.remove("visible");
   });
 
   openAddNotificationModal.addEventListener("click", function () {
-    addNotificationModal.classList.remove("hidden");
-    modalOverlay.classList.add("visible");
+    addNotificationModal.classList.remove("hidden"); // Ensure this line is correctly removing the 'hidden' class
   });
   loadMoreNotifications();
 });
