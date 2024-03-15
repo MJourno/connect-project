@@ -27,12 +27,19 @@ document.getElementById("show-more").addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  const notificationInput = document.getElementById("notification-input");
+  const formCounter = document.getElementById("form-counter");
   const openSidebarButton = document.getElementById("openSidebar");
   const closeSidebarButton = document.querySelector(".sidebar-close");
   const closeModalButton = document.querySelector(".add-notification-close");
   const openAddNotificationModal = document.getElementById("openAddModal");
   const sidebar = document.querySelector(".sidebar");
 
+  notificationInput.addEventListener("input", function () {
+    const maxLength = 100;
+    const currentLength = notificationInput.value.length;
+    formCounter.textContent = `${currentLength}/${maxLength}`;
+  });
   openSidebarButton.addEventListener("click", () => {
     sidebar.classList.remove("hidden");
     toggleOverlayVisibility(true);
@@ -70,16 +77,17 @@ function updateAndLoadNotifications(newTab) {
   loadMoreNotifications();
 }
 
-function filterNotifications(event) {
-  const notifications = document.querySelectorAll(".notification-card");
-  const tabId = event.target.id;
+// function filterNotifications(event) {
+//   console.log("Filtering notifications...");
+//   const notifications = document.querySelectorAll(".notification-card");
+//   const tabId = event.target.id;
 
-  notifications.forEach((notification) => {
-    const isRead = notification.dataset.read === "true";
-    notification.style.display =
-      tabId === "unread-tab" && isRead ? "none" : "block";
-  });
-}
+//   notifications.forEach((notification) => {
+//     const isRead = notification.dataset.read === "true";
+//     notification.style.display =
+//       tabId === "unread-tab" && isRead ? "none" : "block";
+//   });
+// }
 
 function renderNotifications() {
   const notificationContainer = document.getElementById("notification-list");
@@ -90,11 +98,6 @@ function renderNotifications() {
     notificationCard.classList.add("notification-card");
     notificationCard.dataset.read = notification.read;
     const formattedDate = formatDate(notification.date);
-
-    // const dateParts = notification.date.split(" ");
-    // const time = dateParts[1];
-    // const date = dateParts[0].split("/").slice(0, 2).join(".");
-    // const formattedDate = `${time} | ${date}`;
 
     notificationCard.innerHTML = `
       <div class="notification-title-container">
