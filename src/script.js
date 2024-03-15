@@ -15,18 +15,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
   openSidebarButton.addEventListener("click", function () {
     sidebar.classList.remove("hidden");
+    modalOverlay.classList.remove("hidden"); // Show the overlay
+    modalOverlay.classList.add("visible");
   });
 
   closeSidebarButton.addEventListener("click", function () {
     sidebar.classList.add("hidden");
+    modalOverlay.classList.add("hidden"); // Hide the overlay
+    modalOverlay.classList.remove("visible");
   });
 
   closeModalButton.addEventListener("click", function () {
     addNotificationModal.classList.add("hidden");
+    modalOverlay.classList.add("hidden"); // Hide the overlay
+    modalOverlay.classList.remove("visible"); // Ensure the overlay is not marked as visible
   });
 
   openAddNotificationModal.addEventListener("click", function () {
     addNotificationModal.classList.remove("hidden"); // Ensure this line is correctly removing the 'hidden' class
+    modalOverlay.classList.remove("hidden"); // Show the overlay
+    modalOverlay.classList.add("visible"); // Ensure the overlay is marked as visible
   });
   loadMoreNotifications();
 });
