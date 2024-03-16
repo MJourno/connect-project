@@ -2,20 +2,25 @@
 <aside class="sidebar hidden">
   <section class="sidebar-header">
     <div class="sidebar-header-content">
-      <img class="sidebar-icon" />
+      <i class="fa-regular fa-bell sidebar-bell" style="color: #292929;"></i>
       <h1 class="sidebar-title">התראות</h1>
     </div>
-    <button class="sidebar-close">&times; </button>
+    <button type="button" class="sidebar-close" aria-label="Close">
+      <i
+        class="fa-solid fa-xmark sidebar-close-btn"
+        style="color: #32324c;"
+      ></i>
+    </button>
   </section>
   <section class="sidebar-tabs">
     <button class="sidebar-tab" id="unread-tab">שלא נקראו</button>
-    <button class="sidebar-tab" id="all-tab">כל ההתראות</button>
+    <button class="sidebar-tab selected" id="all-tab">כל ההתראות</button>
   </section>
   <section class="sidebar-notification-container" id="notification-list">
   </section>
-  <button class="sidebar-show-more" id="show-more">Show More</button>
+  <button class="sidebar-show-more" id="show-more">טען עוד</button>
 
   <section class="sidebar-footer">
-    <button id="mark-all-read">Mark All as Read</button>
+    <button class="sidebar-mark-all-btn" id="mark-all-read">סמן הכל כנקרא</button>
   </section>
 </aside>

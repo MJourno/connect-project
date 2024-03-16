@@ -126,6 +126,18 @@ function setupEventListeners() {
 }
 
 function updateAndLoadNotifications(newTab) {
+  console.log("selected new tab", newTab);
+
+  // Remove the 'selected' class from all tabs
+  const tabs = document.querySelectorAll(".sidebar-tab");
+  tabs.forEach((tab) => tab.classList.remove("selected"));
+
+  // Add the 'selected' class to the currently selected tab
+  const selectedTab = document.getElementById(newTab + "-tab");
+  if (selectedTab) {
+    selectedTab.classList.add("selected");
+  }
+
   currentPage = 0;
   currentNotifications = [];
   currentTab = newTab;
@@ -183,6 +195,11 @@ function fetchFirstFiveNotifications() {
 // Initialization
 function initialize() {
   fetchFirstFiveNotifications();
+  // Set the default tab as selected
+  const defaultTab = document.getElementById("all-tab");
+  if (defaultTab) {
+    defaultTab.classList.add("selected");
+  }
 }
 
 // Call the initialization function
