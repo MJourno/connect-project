@@ -33,6 +33,11 @@ document
 document
   .getElementById("all-tab")
   .addEventListener("click", () => updateAndLoadNotifications("all"));
+document.getElementById("mark-all-read").addEventListener("click", () => {
+  markAllNotificationsAsRead();
+  updateAllNotificationsOnServer();
+});
+
 // Functions
 function setupEventListeners() {
   const notificationInput = document.getElementById("notification-input");
@@ -219,10 +224,23 @@ function renderNotifications() {
   const notificationContainer = document.getElementById("notification-list");
   notificationContainer.innerHTML = "";
 
-  currentNotifications.forEach((notification) => {
-    const notificationCard = createNotificationCard(notification);
-    notificationContainer.appendChild(notificationCard);
-  });
+  // Check if there are any notifications to display
+  if (currentNotifications.length === 0) {
+    // Display a message indicating that there are no notifications
+    notificationContainer.innerHTML = `
+      <div class="sidebar-message">
+        <i class="fa-regular fa-bell sidebar-message-bell" style="color: #292929;"></i>
+        <h3 class="sidebar-message-title">לא נמצאו התראות</h3>
+        <p class="sidebar-message-text">אין התראות חדשות במערכת</p>
+      </div>
+    `;
+  } else {
+    // Render the notifications as before
+    currentNotifications.forEach((notification) => {
+      const notificationCard = createNotificationCard(notification);
+      notificationContainer.appendChild(notificationCard);
+    });
+  }
 }
 function loadMoreNotifications() {
   fetch(
@@ -241,6 +259,34 @@ function loadMoreNotifications() {
       renderNotifications();
     });
 }
+function markAllNotificationsAsRead() {
+  currentNotifications.forEach((notification) => {
+    notification.read = true;
+  });
+  // Update the UI to reflect the changes
+  renderNotifications();
+}
+
+function updateAllNotificationsOnServer() {
+  fetch("/update-all-notifications", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      read: true,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("All notifications updated:", data);
+      renderNotifications();
+    })
+    .catch((error) => {
+      console.error("Error updating all notifications:", error);
+    });
+}
+
 // Data fetching functions
 function fetchFirstFiveNotifications() {
   fetch("/api/notifications?page=0&size=5&tab=all")

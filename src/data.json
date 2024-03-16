@@ -5,7 +5,7 @@
       "title": "לא ביטול אוטומטי של שיעור",
       "content": "שיעור עם יוסי יום רביעי 18:00 בוטל בהצלחה",
       "date": "20/02/2022 12:00",
-      "read": false
+      "read": true
     },
     {
       "id": 2,
@@ -33,7 +33,7 @@
       "title": "חריגה בשיבוץ קבוע",
       "content": "המנוי של אנה - פעמיים בשבוע חרג משיבוץ קבוע בתאריך 10/03/2024",
       "date": "10/03/2024 10:00",
-      "read": true
+      "read": false
     },
     {
       "id": 6,
@@ -47,14 +47,14 @@
       "title": "לא תזכורת לשיעור",
       "content": "שיעור עם יוסי יום רביעי 18:00 עוד שעה",
       "date": "07/03/2024 17:00",
-      "read": true
+      "read": false
     },
     {
       "id": 8,
       "title": "ביטול אוטומטי של שיעור",
       "content": "שיעור עם יוסי יום שלישי 18:00 בוטל בהצלחה",
       "date": "06/03/2024 18:00",
-      "read": true
+      "read": false
     },
     {
       "id": 9,
@@ -68,28 +68,28 @@
       "title": "בדיקת איפוס",
       "content": "איפוס ספירה",
       "date": "15/03/2024 18:44",
-      "read": false
+      "read": true
     },
     {
       "id": 11,
       "title": "v,rl;jgkj",
       "content": "jklfhgjklgfjh",
       "date": "15/03/2024 20:11",
-      "read": false
+      "read": true
     },
     {
       "id": 12,
       "title": "szd",
       "content": "asd",
       "date": "15/03/2024 21:28",
-      "read": false
+      "read": true
     },
     {
       "id": 13,
       "title": "kjhh",
       "content": "gfhgf",
       "date": "15/03/2024 21:55",
-      "read": false
+      "read": true
     }
   ]
 }

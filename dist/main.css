@@ -8,16 +8,17 @@
   color: #fff;
 }
 
-.logo {
+.header-logo {
   text-align: right;
-  font: normal normal medium 33px/38px Open Sans;
+  font-size: 33px;
   letter-spacing: 0px;
   color: #292929;
   text-transform: capitalize;
   opacity: 1;
+  padding: 22px 26px 19px 0px;
 }
 
-.status {
+.header-status {
   width: 182px;
   height: 56px;
   background: #fdeaef 0% 0% no-repeat padding-box;
@@ -29,72 +30,28 @@
   align-items: center;
 }
 
-.status-text {
+.header-status-text {
   text-align: center;
-  font: normal normal medium 16px/19px Rubik;
+  font-size: 16px;
   letter-spacing: 0px;
   color: #ea1f5b;
   opacity: 1;
+  margin-right: 10px;
 }
 
-.icons {
+.header-icons {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-}
-
-.icon {
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.icon span {
-  margin-right: 5px;
-}
-
-.badge {
-  width: 23px;
-  height: 20px;
-  background: #fc1349 0% 0% no-repeat padding-box;
-  border: 2px solid #ffffff;
-  border-radius: 5px;
-  opacity: 1;
-}
-
-.button {
-  margin-left: auto;
-}
-
-.red-button {
-  background-color: red;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.red-button:hover {
-  background-color: darkred;
+  position: relative;
+  justify-content: space-between;
 }
 
 .body {
   background: #f7f7f7 0% 0% no-repeat padding-box;
   opacity: 1;
-}
-
-.add-notification-btn {
-  background: #292929 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1607843137);
-  border-radius: 18px;
-  opacity: 1;
-  position: absolute;
-  bottom: 40px;
-  left: 40px;
-  width: 72px;
-  height: 72px;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebar {
@@ -245,6 +202,47 @@
 .sidebar-bell {
   width: 21px;
   height: 24px;
+  font-size: 24px;
+}
+
+.sidebar-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: calc(100% - 32px);
+  top: 40%;
+}
+
+.sidebar-message-bell {
+  width: 35px;
+  height: 40px;
+  font-size: 35px;
+  margin: 0;
+  margin-bottom: 32.57px;
+  align-self: center;
+}
+
+.sidebar-message-title {
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 0px;
+  color: #383737;
+  text-transform: capitalize;
+  opacity: 1;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.sidebar-message-text {
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #383737;
+  text-transform: capitalize;
+  opacity: 1;
+  margin: 0;
 }
 
 .notification-card {
@@ -273,7 +271,7 @@
 
 .notification-title {
   text-align: right;
-  font: normal normal medium 18px/24px Open Sans;
+  font-size: 18px;
   letter-spacing: 0px;
   color: #292929;
   opacity: 1;
@@ -282,11 +280,11 @@
 
 .notification-content {
   text-align: right;
-  font: normal normal medium 16px/22px Open Sans;
+  font-size: 16px;
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
-  padding: 7px 11px 0px 21px;
+  padding: 7px 11px 0px 60px;
   margin: 0;
 }
 
@@ -294,7 +292,7 @@
   position: absolute;
   bottom: 9px;
   left: 9px;
-  font: normal normal normal 12px/14px Rubik;
+  font-size: 12px;
   letter-spacing: 0px;
   color: #a5a5a5;
   opacity: 1;
@@ -303,6 +301,24 @@
 
 .notification-status {
   font-size: 12px;
+  font: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.add-notification-btn {
+  background: #292929 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1607843137);
+  border-radius: 18px;
+  opacity: 1;
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  width: 72px;
+  height: 72px;
+  font: inherit;
+  cursor: pointer;
+  border: none;
 }
 
 .add-notification-modal {
@@ -327,17 +343,17 @@
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
 }
 
 .add-notification-title {
   text-align: right;
-  font: normal normal bold 24px Open Sans;
+  font-size: 24px;
   line-height: 33px;
   letter-spacing: 0px;
   color: #191919;
   opacity: 1;
   margin: 0;
-  margin-bottom: 4px;
 }
 
 .add-notification-close {
@@ -363,12 +379,15 @@
   border-radius: 12px;
   opacity: 1;
   text-align: center;
-  font: normal normal medium 16px Rubik;
+  font-size: 16px;
   line-height: 19px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
   padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 .add-notification-form {
@@ -408,16 +427,57 @@
 }
 
 .error-message {
+  font-size: 16px;
   color: red;
   display: none;
 }
 
-.fa-bell {
-  font-size: 28px;
-}
-
 .fa-circle {
   font-size: 12px;
+}
+
+.icon-badge-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 13px;
+  margin-left: 54px;
+  cursor: pointer;
+}
+
+.icon-badge-icon {
+  font-size: 28px;
+  position: relative;
+  align-self: center;
+}
+
+.icon-badge {
+  background-color: red;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  width: 23px;
+  height: 20px;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  position: absolute;
+  top: -8px;
+  right: 0;
+}
+
+.icon-badge-text {
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #292929;
+  opacity: 1;
+  margin-top: 6px;
+  margin-bottom: 15px;
+}
+
+.fa-cash-register {
+  font-size: 28px;
 }
 
 .form-input-container {
@@ -429,7 +489,7 @@
 
 .form-title {
   text-align: right;
-  font: normal normal bold 18px Open Sans;
+  font-size: 18px;
   letter-spacing: 0px;
   line-height: 24px;
   color: #292929;
@@ -462,7 +522,7 @@
 
 .form-counter {
   text-align: right;
-  font: normal normal 300 18px Open Sans;
+  font-size: 18px;
   letter-spacing: 0px;
   line-height: 12px;
   color: #a7a7a7;
@@ -470,15 +530,47 @@
   opacity: 1;
 }
 
-.open-sans, .sidebar-show-more {
+.open-sans, .sidebar-show-more, .error-message {
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
   font-style: normal;
 }
 
-.open-sans-bold, .sidebar-title, .sidebar-tab, .sidebar-mark-all-btn {
+.open-sans-light, .form-counter {
+  font-family: "Open Sans", sans-serif;
+  font-weight: light;
+  font-style: normal;
+}
+
+.open-sans-bold, .sidebar-title, .sidebar-tab, .sidebar-mark-all-btn, .add-notification-title, .form-title {
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
+}
+
+.open-sans-medium, .header-logo, .notification-title, .notification-content, .icon-badge-text {
+  font-family: "Open Sans", sans-serif;
+  font-weight: medium;
+}
+
+.rubik, .sidebar-message-text, .notification-date {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.rubik-bold, .sidebar-message-title {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.rubik-medium, .header-status-text, .add-notification-submit, .icon-badge {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: medium;
+  font-style: normal;
 }
 
 /*# sourceMappingURL=main.css.map */

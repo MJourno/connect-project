@@ -105,6 +105,18 @@ router.post("/update-notification", (req, res) => {
   }
 });
 
+router.post("/update-all-notifications", (req, res) => {
+  const dataPath = path.join(__dirname, "..", "src", "data.json");
+  const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+
+  data.notifications.forEach((notification) => {
+    notification.read = true;
+  });
+
+  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+
+  res.json({ message: "All notifications updated successfully" });
+});
 router.get("/test", (req, res) => {
   res.json({ message: "Test route" });
 });

@@ -3,7 +3,34 @@
   font-weight: normal;
   font-style: normal;
 }
+.open-sans-light {
+  font-family: "Open Sans", sans-serif;
+  font-weight: light;
+  font-style: normal;
+}
 .open-sans-bold {
   font-family: "Open Sans", sans-serif;
-  font-weight: bold; // or 700 for bold weight
+  font-weight: bold;
+}
+.open-sans-medium {
+  font-family: "Open Sans", sans-serif;
+  font-weight: medium;
+}
+.rubik {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+.rubik-bold {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+.rubik-medium {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: medium;
+  font-style: normal;
 }
