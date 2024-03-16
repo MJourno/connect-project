@@ -84,6 +84,26 @@ router.post("/notifications", (req, res) => {
       .json({ error: "An error occurred while processing your request." });
   }
 });
+router.post("/update-notification", (req, res) => {
+  const { id, read } = req.body;
+
+  // Load the current notifications
+  const dataPath = path.join(__dirname, "..", "src", "data.json");
+  const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+
+  // Find the notification by id and update its read status
+  const notification = data.notifications.find((n) => n.id === id);
+  if (notification) {
+    notification.read = read;
+
+    // Write the updated notifications back to the file
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+
+    res.json({ message: "Notification updated successfully" });
+  } else {
+    res.status(404).json({ message: "Notification not found" });
+  }
+});
 
 router.get("/test", (req, res) => {
   res.json({ message: "Test route" });

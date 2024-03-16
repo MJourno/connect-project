@@ -301,6 +301,10 @@
   margin: 0;
 }
 
+.notification-status {
+  font-size: 12px;
+}
+
 .add-notification-modal {
   position: absolute;
   display: flex;
@@ -410,6 +414,10 @@
 
 .fa-bell {
   font-size: 28px;
+}
+
+.fa-circle {
+  font-size: 12px;
 }
 
 .form-input-container {

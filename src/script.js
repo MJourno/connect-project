@@ -128,14 +128,20 @@ function setupEventListeners() {
 function updateAndLoadNotifications(newTab) {
   console.log("selected new tab", newTab);
 
-  // Remove the 'selected' class from all tabs
+  const sidebarFooter = document.querySelector(".sidebar-footer");
   const tabs = document.querySelectorAll(".sidebar-tab");
+
   tabs.forEach((tab) => tab.classList.remove("selected"));
 
   // Add the 'selected' class to the currently selected tab
   const selectedTab = document.getElementById(newTab + "-tab");
   if (selectedTab) {
     selectedTab.classList.add("selected");
+  }
+  if (newTab === "unread") {
+    sidebarFooter.classList.remove("hidden");
+  } else {
+    sidebarFooter.classList.add("hidden");
   }
 
   currentPage = 0;
@@ -144,24 +150,77 @@ function updateAndLoadNotifications(newTab) {
   loadMoreNotifications();
 }
 
+function createNotificationCard(notification) {
+  const notificationCard = document.createElement("div");
+  notificationCard.classList.add("notification-card");
+  notificationCard.dataset.read = notification.read;
+
+  const formattedDate = formatDate(notification.date);
+  const statusIcon = notification.read
+    ? "fa-solid fa-circle"
+    : "fa-solid fa-circle";
+  const statusColor = notification.read ? "#959595" : "#0d7dff";
+
+  notificationCard.innerHTML = `
+    <div class="notification-title-container">
+      <p>
+        <button class="notification-status">
+          <i class="${statusIcon}" style="color: ${statusColor};"></i>
+        </button>
+      </p>
+      <h3 class="notification-title">${notification.title}</h3>
+    </div>
+    <p class="notification-content">${notification.content}</p>
+    <p class="notification-date">${formattedDate}</p>
+ `;
+
+  const statusButton = notificationCard.querySelector(".notification-status");
+  statusButton.addEventListener("click", () => {
+    toggleNotificationReadStatus(notification, statusButton);
+  });
+
+  return notificationCard;
+}
+
+function toggleNotificationReadStatus(notification, statusButton) {
+  // Toggle
+  notification.read = !notification.read;
+  // Update UI
+  const newStatusIcon = notification.read
+    ? "fa-solid fa-circle"
+    : "fa-solid fa-circle";
+  const newStatusColor = notification.read ? "#959595" : "#0d7dff";
+  statusButton.innerHTML = `<i class="${newStatusIcon}" style="color: ${newStatusColor};"></i>`;
+
+  updateNotificationOnServer(notification);
+}
+
+function updateNotificationOnServer(notification) {
+  fetch("/update-notification", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: notification.id,
+      read: notification.read,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Notification updated:", data);
+    })
+    .catch((error) => {
+      console.error("Error updating notification:", error);
+    });
+}
+
 function renderNotifications() {
   const notificationContainer = document.getElementById("notification-list");
   notificationContainer.innerHTML = "";
 
   currentNotifications.forEach((notification) => {
-    const notificationCard = document.createElement("div");
-    notificationCard.classList.add("notification-card");
-    notificationCard.dataset.read = notification.read;
-    const formattedDate = formatDate(notification.date);
-
-    notificationCard.innerHTML = `
-      <div class="notification-title-container">
-        <p>${notification.read ? "Read" : "Unread"}</p>
-        <h3 class="notification-title">${notification.title}</h3>
-      </div>
-      <p class="notification-content">${notification.content}</p>
-      <p class="notification-date">${formattedDate}</p>
-    `;
+    const notificationCard = createNotificationCard(notification);
     notificationContainer.appendChild(notificationCard);
   });
 }
