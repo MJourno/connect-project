@@ -36,10 +36,18 @@ document
 document.getElementById("mark-all-read").addEventListener("click", () => {
   markAllNotificationsAsRead();
   updateAllNotificationsOnServer();
+  updateNotificationCounter();
 });
 
 // Functions
 function setupEventListeners() {
+  const unreadNotificationsCount = window.unreadNotificationsCount;
+  console.log(
+    "Unread notifications count in client-side:",
+    unreadNotificationsCount
+  ); // Add this line
+  document.getElementById("notification-counter").textContent =
+    unreadNotificationsCount;
   const notificationInput = document.getElementById("notification-input");
   const formCounter = document.getElementById("form-counter");
   const form = document.getElementById("add-notification-form");
@@ -56,6 +64,7 @@ function setupEventListeners() {
   const openAddNotificationModal = document.getElementById("openAddModal");
   const sidebar = document.querySelector(".sidebar");
 
+  //add new notification
   notificationInput.addEventListener("input", function () {
     const maxLength = 100;
     if (notificationInput.value.length > maxLength) {
@@ -97,6 +106,7 @@ function setupEventListeners() {
         console.log("Success:", data);
         toggleModalVisibility(false);
         toggleOverlayVisibility(false);
+        currentNotifications.unshift(data);
 
         form.reset();
         formCounter.textContent = `0/${MAX_TYPED_CHARACTERS}`;
@@ -130,6 +140,7 @@ function setupEventListeners() {
   loadMoreNotifications();
 }
 function updateNotificationCounter() {
+  console.log("updating notification counter");
   const unreadNotificationsCount = currentNotifications.filter(
     (notification) => !notification.read
   ).length;
@@ -189,6 +200,7 @@ function createNotificationCard(notification) {
   const statusButton = notificationCard.querySelector(".notification-status");
   statusButton.addEventListener("click", () => {
     toggleNotificationReadStatus(notification, statusButton);
+    updateNotificationCounter();
   });
 
   return notificationCard;
@@ -205,7 +217,6 @@ function toggleNotificationReadStatus(notification, statusButton) {
   statusButton.innerHTML = `<i class="${newStatusIcon}" style="color: ${newStatusColor};"></i>`;
 
   updateNotificationOnServer(notification);
-  updateNotificationCounter();
 }
 
 function updateNotificationOnServer(notification) {
@@ -220,9 +231,7 @@ function updateNotificationOnServer(notification) {
     }),
   })
     .then((response) => response.json())
-    .then((data) => {
-      console.log("Notification updated:", data);
-    })
+    .then((data) => {})
     .catch((error) => {
       console.error("Error updating notification:", error);
     });
@@ -251,13 +260,15 @@ function renderNotifications() {
   }
 }
 function loadMoreNotifications() {
+  if (currentPage === 0) {
+    currentNotifications = []; // Clear the current notifications array if it's the first fetch
+  }
   fetch(
     `/api/notifications?page=${currentPage}&size=${NOTIFICATIONS_PER_PAGE}&tab=${currentTab}`
   )
     .then((response) => response.json())
     .then((notifications) => {
       currentNotifications = currentNotifications.concat(notifications);
-      updateNotificationCounter();
       if (notifications.length < NOTIFICATIONS_PER_PAGE) {
         document.getElementById("show-more").style.display = "none";
       } else {
@@ -273,7 +284,6 @@ function markAllNotificationsAsRead() {
   });
   // Update the UI to reflect the changes
   renderNotifications();
-  updateNotificationCounter();
 }
 
 function updateAllNotificationsOnServer() {
@@ -290,7 +300,6 @@ function updateAllNotificationsOnServer() {
     .then((data) => {
       console.log("All notifications updated:", data);
       renderNotifications();
-      updateNotificationCounter();
     })
     .catch((error) => {
       console.error("Error updating all notifications:", error);
@@ -299,6 +308,7 @@ function updateAllNotificationsOnServer() {
 
 // Data fetching functions
 function fetchFirstFiveNotifications() {
+  currentNotifications = [];
   fetch("/api/notifications?page=0&size=5&tab=all")
     .then((response) => response.json())
     .then((notifications) => {
@@ -308,12 +318,20 @@ function fetchFirstFiveNotifications() {
     .catch((error) => console.error("Error fetching notifications:", error));
 }
 // Initialization
+let isInitialized = false; // Add this flag outside of the initialize function
+
+// Initialization
 function initialize() {
-  fetchFirstFiveNotifications();
-  // Set the default tab as selected
-  const defaultTab = document.getElementById("all-tab");
-  if (defaultTab) {
-    defaultTab.classList.add("selected");
+  if (!isInitialized) {
+    // Check if it's already initialized
+    fetchFirstFiveNotifications();
+    console.log("App initialized!");
+    // Set the default tab as selected
+    const defaultTab = document.getElementById("all-tab");
+    if (defaultTab) {
+      defaultTab.classList.add("selected");
+    }
+    isInitialized = true; // Set the flag to true after initialization
   }
 }
 

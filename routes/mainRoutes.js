@@ -14,6 +14,10 @@ function sortNotificationsByDateDescending(a, b) {
 router.get("/", (req, res) => {
   const dataPath = path.join(__dirname, "..", "src", "data.json");
   const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+  const unreadNotificationsCount = data.notifications.filter(
+    (notification) => !notification.read
+  ).length;
+  console.log("Unread notifications count:", unreadNotificationsCount);
   const page = parseInt(req.query.page) || 0;
   const size = parseInt(req.query.size) || NOTIFICATIONS_PER_PAGE;
   const start = page * size;
@@ -30,7 +34,7 @@ router.get("/", (req, res) => {
     notification.date = formatDate(notification.date);
   });
 
-  res.render("index", { notifications });
+  res.render("index", { unreadNotificationsCount });
 });
 
 router.get("/api/notifications", (req, res) => {
