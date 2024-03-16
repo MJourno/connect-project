@@ -129,6 +129,13 @@ function setupEventListeners() {
 
   loadMoreNotifications();
 }
+function updateNotificationCounter() {
+  const unreadNotificationsCount = currentNotifications.filter(
+    (notification) => !notification.read
+  ).length;
+  document.getElementById("notification-counter").textContent =
+    unreadNotificationsCount;
+}
 
 function updateAndLoadNotifications(newTab) {
   console.log("selected new tab", newTab);
@@ -198,6 +205,7 @@ function toggleNotificationReadStatus(notification, statusButton) {
   statusButton.innerHTML = `<i class="${newStatusIcon}" style="color: ${newStatusColor};"></i>`;
 
   updateNotificationOnServer(notification);
+  updateNotificationCounter();
 }
 
 function updateNotificationOnServer(notification) {
@@ -249,7 +257,7 @@ function loadMoreNotifications() {
     .then((response) => response.json())
     .then((notifications) => {
       currentNotifications = currentNotifications.concat(notifications);
-
+      updateNotificationCounter();
       if (notifications.length < NOTIFICATIONS_PER_PAGE) {
         document.getElementById("show-more").style.display = "none";
       } else {
@@ -265,6 +273,7 @@ function markAllNotificationsAsRead() {
   });
   // Update the UI to reflect the changes
   renderNotifications();
+  updateNotificationCounter();
 }
 
 function updateAllNotificationsOnServer() {
@@ -281,6 +290,7 @@ function updateAllNotificationsOnServer() {
     .then((data) => {
       console.log("All notifications updated:", data);
       renderNotifications();
+      updateNotificationCounter();
     })
     .catch((error) => {
       console.error("Error updating all notifications:", error);

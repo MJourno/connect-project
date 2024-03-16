@@ -5,7 +5,6 @@ const routes = require("./routes/mainRoutes");
 const app = express();
 
 const partialsDir = path.join(__dirname, "views/components");
-console.log("Partials directory:", partialsDir); // Debug log
 
 const hbs = expbs.create({
   defaultLayout: "mainLayout",
