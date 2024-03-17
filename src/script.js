@@ -17,6 +17,10 @@ function toggleModalVisibility(show) {
   );
   toggleElementVisibility(addNotificationModal, show);
 }
+function toggleSuccessModalVisibility(show) {
+  const successModal = document.querySelector(".success-modal");
+  toggleElementVisibility(successModal, show);
+}
 function toggleOverlayVisibility(show) {
   const modalOverlay = document.querySelector(".modal-overlay");
   toggleElementVisibility(modalOverlay, show);
@@ -27,6 +31,12 @@ document.getElementById("show-more").addEventListener("click", () => {
   currentPage++;
   loadMoreNotifications();
 });
+document
+  .querySelector(".success-modal .add-notification-close")
+  .addEventListener("click", () => {
+    toggleSuccessModalVisibility(false);
+    toggleOverlayVisibility(false);
+  });
 document
   .getElementById("unread-tab")
   .addEventListener("click", () => updateAndLoadNotifications("unread"));
@@ -102,8 +112,9 @@ function setupEventListeners() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        toggleModalVisibility(false);
-        toggleOverlayVisibility(false);
+        toggleModalVisibility(false); // Hide the add-notification modal
+        toggleSuccessModalVisibility(true); // Show the success modal
+        toggleOverlayVisibility(true); // Show the overlay
         currentNotifications.unshift(data);
         console.log("Notification added successfully");
         window.unreadNotificationsCount++;
