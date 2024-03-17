@@ -16,9 +16,17 @@
 @media screen and (max-width: 768px) {
   .navbar {
     height: 72px;
-    width: 100%;
+    width: calc(100% - 74px);
+    flex-direction: row;
+    padding: 0px 37px;
+    align-items: center;
+    background: #ffffff;
+    .navbar-items {
+      margin-top: 13px;
+      display: flex;
+      flex-direction: row;
+      gap: 42px;
+      align-items: center;
+    }
   }
-}
-.navbar-item {
-  margin: 0;
 }

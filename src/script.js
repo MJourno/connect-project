@@ -46,9 +46,7 @@ function setupEventListeners() {
   console.log(
     "Unread notifications count in client-side:",
     unreadNotificationsCount
-  ); // Add this line
-  // document.getElementById("notification-counter").textContent =
-  //   unreadNotificationsCount;
+  );
   const notificationInput = document.getElementById("notification-input");
   const formCounter = document.getElementById("form-counter");
   const form = document.getElementById("add-notification-form");
@@ -58,8 +56,7 @@ function setupEventListeners() {
   const contentInput = form.querySelector('textarea[name="content"]');
   const titleError = document.getElementById("title-error");
   const contentError = document.getElementById("content-error");
-
-  const openSidebarButton = document.getElementById("openSidebar");
+  const openSidebarButton = document.querySelectorAll("#openSidebar");
   const closeSidebarButton = document.querySelector(".sidebar-close");
   const closeModalButton = document.querySelector(".add-notification-close");
   const openAddNotificationModal = document.getElementById("openAddModal");
@@ -121,13 +118,14 @@ function setupEventListeners() {
   });
   console.log("before Opening sidebar", openSidebarButton);
 
-  openSidebarButton.addEventListener("click", () => {
-    console.log("Opening sidebar");
-    sidebar.classList.remove("hidden");
-    currentTab = "all";
-    toggleOverlayVisibility(true);
-    updateAndLoadNotifications("all");
-    // fetchFirstFiveNotifications();
+  openSidebarButton.forEach((button) => {
+    button.addEventListener("click", () => {
+      console.log("Opening sidebar");
+      sidebar.classList.remove("hidden");
+      currentTab = "all";
+      toggleOverlayVisibility(true);
+      updateAndLoadNotifications("all");
+    });
   });
 
   closeSidebarButton.addEventListener("click", () => {

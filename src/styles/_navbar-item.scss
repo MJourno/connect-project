@@ -10,6 +10,9 @@
     position: relative;
     align-self: center;
   }
+  .navbar-icon {
+    color: #ffffff;
+  }
 
   .navbar-item-badge {
     background-color: red;
@@ -37,7 +40,37 @@
     margin-top: 6px;
     margin-bottom: 15px;
   }
-  .navbar-item-text_darkmode {
+  .navbar-item-text_mode {
     color: #fff;
+  }
+}
+.navbar-item-container_show {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .navbar-item-container {
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    .navbar-icon {
+      color: #292929;
+    }
+    .navbar-item-badge {
+      top: -12px;
+      right: -12px;
+    }
+  }
+  .navbar-item-icon {
+    font-size: 28px;
+    color: #292929;
+  }
+  .navbar-item-text_mode {
+    display: none;
+  }
+  .navbar-item-container_hide {
+    display: none;
+  }
+  .navbar-item-container_show {
+    display: flex;
   }
 }

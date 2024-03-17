@@ -1,14 +1,16 @@
 <nav class="navbar">
   <section class="navbar-items">
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-solid fa-house navbar-item" color="#FFFFFF" itemText="ראשי"}}
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-calendar" color="#FFFFFF" itemText="יומן"}}
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-solid fa-cash-register"  color="#FFFFFF" itemText="קופה" }}
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-solid fa-circle-user" color="#FFFFFF" itemText="לקוחות"}}
+    {{> navbar-item itemId="openSidebar" containerClass=" navbar-item-container navbar-item-container_show" spanClass="navbar-item-text_mode" iconClass="fa-bell navbar-icon" showBadge="true" badgeCount=unreadNotificationsCount itemText="התראות"}}
+    {{> navbar-item spanClass="navbar-item-text_mode" iconClass="fa-solid fa-house navbar-item navbar-icon" itemText="ראשי"}}
+    {{> navbar-item spanClass="navbar-item-text_mode" iconClass="fa-calendar navbar-icon" itemText="יומן"}}
+    {{> navbar-item spanClass="navbar-item-text_mode" iconClass="fa-solid fa-cash-register navbar-icon" itemText="קופה" }}
+    {{> navbar-item containerClass="navbar-item-container_hide" spanClass="navbar-item-text_mode" iconClass="fa-solid fa-circle-user navbar-icon" itemText="לקוחות"}}
   </section>
     <section class="navbar-items">
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-solid fa-store" color="#FFFFFF" itemText="שירותים ופריטים"}}
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-solid fa-chart-simple" color="#FFFFFF" itemText="דוחות"}}
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="fa-solid fa-gear" color="#FFFFFF" itemText="הגדרות" }}
-    {{> navbar-item darkModeClass="navbar-item-text_darkmode" iconClass="rectangle-logo" color="#FFFFFF" itemText="החשבון שלי"}}
+    {{> navbar-item containerClass="navbar-item-container_hide" spanClass="navbar-item-text_mode" iconClass="fa-solid fa-store navbar-icon" itemText="שירותים ופריטים"}}
+    {{> navbar-item containerClass="navbar-item-container_hide" spanClass="navbar-item-text_mode" iconClass="fa-solid fa-chart-simple navbar-icon" itemText="דוחות"}}
+    {{> navbar-item containerClass="navbar-item-container_hide" spanClass="navbar-item-text_mode" iconClass="fa-solid fa-gear navbar-icon" itemText="הגדרות" }}
+    {{> navbar-item containerClass="navbar-item-container_hide" spanClass="navbar-item-text_mode" iconClass="rectangle-logo navbar-icon" itemText="החשבון שלי"}}
+    {{> navbar-item containerClass="navbar-item-container_show" spanClass="navbar-item-text_mode" iconClass="fa-solid fa-bars navbar-icon" itemText="תפריט"}}
   </section>
 </nav>

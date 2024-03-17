@@ -1,10 +1,7 @@
-<div class="navbar-item-container" id={{itemId}}>
-  <i
-    class="fa-regular {{iconClass}} navbar-item-icon"
-    style="color:{{color}};"
-  ></i>
+<div class="navbar-item-container {{containerClass}}" id={{itemId}}>
+  <i class="fa-regular {{iconClass}} navbar-item-icon"></i>
   {{#if showBadge}}
     <div class="navbar-item-badge">{{badgeCount}}</div>
   {{/if}}
-  <span class="navbar-item-text {{darkModeClass}}">{{itemText}}</span>
+  <span class="navbar-item-text {{spanClass}}">{{itemText}}</span>
 </div>
