@@ -36,6 +36,7 @@ document
 document.getElementById("mark-all-read").addEventListener("click", () => {
   markAllNotificationsAsRead();
   updateAllNotificationsOnServer();
+  window.unreadNotificationsCount = 0;
   updateNotificationCounter();
 });
 
@@ -46,8 +47,8 @@ function setupEventListeners() {
     "Unread notifications count in client-side:",
     unreadNotificationsCount
   ); // Add this line
-  document.getElementById("notification-counter").textContent =
-    unreadNotificationsCount;
+  // document.getElementById("notification-counter").textContent =
+  //   unreadNotificationsCount;
   const notificationInput = document.getElementById("notification-input");
   const formCounter = document.getElementById("form-counter");
   const form = document.getElementById("add-notification-form");
@@ -107,6 +108,9 @@ function setupEventListeners() {
         toggleModalVisibility(false);
         toggleOverlayVisibility(false);
         currentNotifications.unshift(data);
+        console.log("Notification added successfully");
+        window.unreadNotificationsCount++;
+        updateNotificationCounter();
 
         form.reset();
         formCounter.textContent = `0/${MAX_TYPED_CHARACTERS}`;
@@ -115,11 +119,15 @@ function setupEventListeners() {
         console.error("Error:", error);
       });
   });
+  console.log("before Opening sidebar", openSidebarButton);
 
   openSidebarButton.addEventListener("click", () => {
+    console.log("Opening sidebar");
     sidebar.classList.remove("hidden");
+    currentTab = "all";
     toggleOverlayVisibility(true);
-    fetchFirstFiveNotifications();
+    updateAndLoadNotifications("all");
+    // fetchFirstFiveNotifications();
   });
 
   closeSidebarButton.addEventListener("click", () => {
@@ -141,11 +149,11 @@ function setupEventListeners() {
 }
 function updateNotificationCounter() {
   console.log("updating notification counter");
-  const unreadNotificationsCount = currentNotifications.filter(
-    (notification) => !notification.read
-  ).length;
-  document.getElementById("notification-counter").textContent =
-    unreadNotificationsCount;
+  // window.unreadNotificationsCount = currentNotifications.filter(
+  //   (notification) => !notification.read
+  // ).length;
+  document.querySelector("#openSidebar .navbar-item-badge").textContent =
+    window.unreadNotificationsCount;
 }
 
 function updateAndLoadNotifications(newTab) {
@@ -213,6 +221,11 @@ function toggleNotificationReadStatus(notification, statusButton) {
   const newStatusIcon = notification.read
     ? "fa-solid fa-circle"
     : "fa-solid fa-circle";
+  if (notification.read) {
+    window.unreadNotificationsCount--;
+  } else {
+    window.unreadNotificationsCount++;
+  }
   const newStatusColor = notification.read ? "#959595" : "#0d7dff";
   statusButton.innerHTML = `<i class="${newStatusIcon}" style="color: ${newStatusColor};"></i>`;
 

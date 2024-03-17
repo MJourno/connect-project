@@ -1,0 +1,11 @@
+.navbar {
+  grid-area: navbar;
+  background: #292929 0% 0% no-repeat padding-box;
+  width: 80px;
+}
+@media screen and (max-width: 768px) {
+  .navbar {
+    height: 72px;
+    width: 100%;
+  }
+}

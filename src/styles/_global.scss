@@ -1,3 +1,20 @@
+body {
+  background: #f7f7f7 0% 0% no-repeat padding-box;
+  margin: 0;
+}
+.layout-grid {
+  display: grid;
+  grid-template-areas:
+    "header navbar"
+    " body navbar";
+  height: 100vh;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr auto;
+  .content {
+    grid-area: body;
+  }
+}
+
 .hidden {
   display: none;
 }
@@ -37,45 +54,17 @@
 .fa-circle {
   font-size: 12px;
 }
-.icon-badge-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-top: 13px;
-  margin-left: 54px;
-  cursor: pointer;
-}
-
-.icon-badge-icon {
-  font-size: 28px;
-  position: relative;
-  align-self: center;
-}
-.icon-badge {
-  background-color: red;
-  font-size: 12px;
-  color: white;
-  text-align: center;
-  @extend .rubik-medium;
-  font-size: 14px;
-  width: 23px;
-  height: 20px;
-  border-radius: 5px;
-  border: 2px solid #ffffff;
-  position: absolute;
-  top: -8px;
-  right: 0;
-}
-.icon-badge-text {
-  text-align: center;
-  @extend .open-sans-medium;
-  font-size: 16px;
-  letter-spacing: 0px;
-  color: #292929;
-  opacity: 1;
-  margin-top: 6px;
-  margin-bottom: 15px;
-}
 .fa-cash-register {
   font-size: 28px;
+}
+
+@media screen and (max-width: 768px) {
+  .layout-grid {
+    grid-template-areas:
+      "header"
+      "body"
+      "navbar";
+    grid-template-rows: 0 1fr auto;
+    grid-template-columns: 1fr;
+  }
 }

@@ -14,11 +14,13 @@
 }
 
 .add-notification-modal {
-  position: absolute;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  position: absolute;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 12px;
   opacity: 1;
@@ -28,6 +30,7 @@
   padding: 18px 16px 16px;
   border: none;
   box-sizing: border-box;
+  margin: 0;
 }
 .add-notification-header {
   display: flex;
@@ -80,4 +83,13 @@
 }
 .add-notification-form {
   margin: 0;
+}
+@media screen and (max-width: 768px) {
+  .add-notification-modal {
+    width: 100%;
+    top: 94px;
+    left: 0;
+    height: calc(100% - 94px);
+    transform: translate(0, 0);
+  }
 }

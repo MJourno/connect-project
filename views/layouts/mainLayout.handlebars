@@ -25,7 +25,16 @@
     />
   </head>
   <body>
-    {{{body}}}
+    <div class="layout-grid">
+      {{> header}}
+      {{> navbar}}
+      <div class="content"> {{{body}}}</div>
+    </div>
+    
+    {{> floating-buttons}}
+    {{> sidebar}}
+    {{> add-notification-modal}}
+    {{> success-modal}}
     <script type="module" src="/bundle.js"></script>
   </body>
 </html>

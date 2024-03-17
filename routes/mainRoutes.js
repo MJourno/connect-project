@@ -4,10 +4,13 @@ const path = require("path");
 const { formatDate } = require("../src/utils");
 const router = express.Router();
 const NOTIFICATIONS_PER_PAGE = 5;
-
+function parseToDate(dateString) {
+  const parts = dateString.split(/[/ :]/);
+  return new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4]);
+}
 function sortNotificationsByDateDescending(a, b) {
-  const dateA = new Date(a.date);
-  const dateB = new Date(b.date);
+  const dateA = parseToDate(a.date);
+  const dateB = parseToDate(b.date);
   return dateB - dateA; // Sort in descending order
 }
 

@@ -7,36 +7,9 @@
     <span class="header-status-text">חשבון פתוח</span>
   </div>
   <div class="header-icons">
-
-    <div class="icon-badge-container tasks">
-      <i
-        class="fa-regular fa-calendar icon-badge-icon"
-        style="color: #292929;"
-      ></i>
-      <div class="icon-badge">0</div>
-      <span class="icon-badge-text">לטיפולך</span>
-    </div>
-
-    <div class="icon-badge-container search">
-      <i
-        class="fa-solid fa-magnifying-glass icon-badge-icon"
-        style="color: #292929;"
-      ></i>
-      <span class="icon-badge-text">חיפוש</span>
-    </div>
-
-    <div class="icon-badge-container support">
-      <i
-        class="fa-solid fa-headset icon-badge-icon"
-        style="color: #292929;"
-      ></i>
-      <span class="icon-badge-text">תמיכה</span>
-    </div>
-
-    <div class="icon-badge-container notifications" id="openSidebar">
-      <i class="fa-regular fa-bell icon-badge-icon" style="color: #292929;"></i>
-      <div class="icon-badge" id="notification-counter">0</div>
-      <span class="icon-badge-text">התראות</span>
-    </div>
+    {{> navbar-item iconClass="fa-calendar" color="#292929" itemText="לטיפולך"}}
+    {{> navbar-item iconClass="fa-solid fa-magnifying-glass" color="#292929" itemText="חיפוש"}}
+    {{> navbar-item iconClass="fa-solid fa-headset" color="#292929" itemText="תמיכה"}}
+    {{> navbar-item itemId="openSidebar" iconClass="fa-bell" showBadge="true" color="#292929" itemText="התראות" badgeCount=unreadNotificationsCount}}
   </div>
 </header>
