@@ -1,6 +1,50 @@
-// .floating-buttons-container {
-//   background: #f7f7f7 0% 0% no-repeat padding-box;
-//   opacity: 1;
-//   padding: 0;
-//   margin: 0;
-// }
+.add-notification-btn {
+  background: #292929 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000029;
+  border-radius: 18px;
+  opacity: 1;
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  width: 72px;
+  height: 72px;
+  font: inherit;
+  cursor: pointer;
+  border: none;
+}
+.floating-btn-mobile {
+  display: none;
+}
+.floating-calendar {
+  font-size: 25px;
+}
+.floating-btn-text {
+  @extend .open-sans-medium;
+  font-size: 13px;
+  color: #292929;
+}
+@media screen and (max-width: 768px) {
+  .add-notification-btn {
+    bottom: 90px;
+    left: 22px;
+  }
+  .floating-btn-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 9px;
+    background: #ffff;
+    box-shadow: 0px 3px 10px #00000029;
+    border-radius: 18px;
+    opacity: 1;
+    position: absolute;
+    bottom: 174px;
+    left: 22px;
+    width: 72px;
+    height: 72px;
+    font: inherit;
+    cursor: pointer;
+    border: none;
+  }
+}
